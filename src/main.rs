@@ -35,7 +35,9 @@ fn count_neighbors(grid: &Vec<Vec<bool>>, r: usize, c:usize) -> i32 {
             let neighbor_col = (c as isize) + j;
 
             if neighbor_row >= 0 && neighbor_row < (ROWS as isize) && neighbor_col >= 0 && neighbor_col < (COLS as isize) {
-                
+                if grid[neighbor_row as usize][neighbor_col as usize] == true {
+                    count += 1;
+                }
             }
         }
     }
