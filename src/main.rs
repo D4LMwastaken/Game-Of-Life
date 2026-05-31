@@ -1,29 +1,27 @@
 // Imports
 use std::thread::sleep;
 use std::time::Duration;
+use rand::Rng;
 
 // Defined how big it is
 const ROWS: usize = 67;
 const COLS: usize = 67;
 
 fn main() {
-    let mut grid = vec![vec![false;COLS];ROWS];
-    /* 3 dots on a row
-    grid[10][9] = true;
-    grid[10][10] = true;
-    grid[10][11] = true;
-    */
-    /* Blinking eye
-    grid[10][10] = true; grid[10][11] = true; grid[10][12] = true;
-    grid[11][9] = true; grid[11][10] = true; grid[11][11] = true;
-    */
-    grid[10][11] = true;
-    grid[11][12] = true;
-    grid[12][10] = true; grid [12][11] = true; grid[12][12] = true;
+    let mut rng = rand::thread_rng();
+    let mut grid = Vec::new();
 
-    print_grid(&grid);
+    for _ in 0..ROWS {
+        let mut row = Vec::new();
+        for _ in 0..COLS {
+            let random_boolean:bool = rng.gen_bool(0.2);
+            row.push(random_boolean);
+        }
+        grid.push(row);
+    }
+
     loop {
-        print!("{}[2J{}[1;1H", 27 as char, 27 as char); // Cool print function that clears the terminal
+        print!("{}[2J{}[1;1H", 27 as char, 27 as char);
         print_grid(&grid);
         grid = update_grid(&grid);
         sleep(Duration::from_millis(200));
